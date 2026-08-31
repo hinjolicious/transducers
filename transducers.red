@@ -146,79 +146,10 @@ make-transducer-channel: func[/pipeline xf [any-function!]][
 			either empty? queue [none][take queue] ]]]
 mtc.: :make-transducer-channel
 
-
-COMMENT{ print "^/== TEST ==^/"
-
-; Verification & Usage Examples
-; 1. In-Memory Series Transduction
-
-is-even?: :even?
-double:	  func[x][x * 2]
-
-; Pipeline: Deduplicate globally -> Keep Evens -> Double them -> Batch into pairs (2)
-pipeline: func [step [any-function!]] [
-	b-distinct:	 t-distinct
-	b-filter:	 t-filter :even?
-	b-map:		 t-map :double
-	b-partition: t-partition 2
-	
-	b-distinct b-filter b-map b-partition :step
-]
+t-tap: func[f [any-function!]][
+	closure[step][f][
+		closure[acc input][step][
+			f :input
+			step acc input ]]]
 
 
-print "^/FIRST RUN:"
-numbers: [2 2 4 1 6 4 8 2 10 12 13 14 15 16]
-result: transduce :pipeline :push-reducer copy [] numbers
-probe result
-; Output: [[4 8] [12 16] [20 24]] }
-
-COMMENT{ HOW TO CLEAR THE BUFFER?? }
-
-
-COMMENT{ print "^/SECOND RUN:"
-numbers: [3 8 9 2 2 4 1 6 4 8 2 10 12]
-result: transduce :pipeline :push-reducer copy [] numbers
-probe result
-
-
-print "^/== INTER-THREAD USAGE ==^/"
-
-; 2. Inter-Thread / Co-routine Channel Usage
-; Pipeline: Keep evens -> Drop first 1 item -> Take 3 results
-chan-xf: func [step [any-function!]] [
-	b-filter: t-filter :even?
-	b-drop:	  t-drop 1
-	b-take:	  t-take 3
-
-	b-filter b-drop b-take :step
-]
-
-chan: make-transducer-channel/pipeline :chan-xf
-
-; Producer pushes raw messages
-foreach n [1 2 3 4 5 6 7 8 9 10] [chan/send n]
-
-; Consumer receives pre-processed results
-print chan/receive	; Output: 4
-print chan/receive	; Output: 6
-print chan/receive	; 8
-print chan/receive  ; none }
-
-COMMENT{ chan-xf: func [step [any-function!]] [
-	b-drop:	t-drop 2
-	b-map:  t-map :uppercase
-	b-take:	t-take 3
-
-	b-drop b-map b-take :step
-]
-
-chan: make-transducer-channel/pipeline :chan-xf
-
-; Producer pushes raw messages
-foreach n ["if" "you" "see" "this" "message" "read" "it"] [chan/send n]
-
-; Consumer receives pre-processed results
-print chan/receive
-print chan/receive
-print chan/receive
-print chan/receive }

@@ -1,6 +1,6 @@
 Red []
 
-#include %transducers.red
+#include %../transducers.red
 #include %comp-funcs.red
 #include %range.red
 
