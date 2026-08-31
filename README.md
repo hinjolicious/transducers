@@ -32,41 +32,13 @@ Transducers decouple data transformations from the underlying source or destinat
 
 | Family | Function | Short Alias | Description | State |
 | --- | --- | --- | --- | --- |
-| **Transformers** | `t-map`<br> | `tm.`<br> | Applies a 1-to-1 function transformation.
-
- | None
-
- |
-| **Filters** | `t-filter`<br> | `tf.`<br> | Retains items matching a predicate function.
-
- | None
-
- |
-| **Stateful** | `t-take`<br> | `tt.`<br> | Retains first $N$ items and signals early loop exit.
-
- | Counter
-
- |
-| **Stateful** | `t-drop`<br> | `td.`<br> | Skips the first $N$ items before passing through.
-
- | Counter
-
- |
-| **Stateful** | `t-dedupe`<br> | `tdd.`<br> | Removes consecutive duplicate values.
-
- | Last Value
-
- |
-| **Stateful** | `t-distinct`<br> | `tdt.`<br> | Removes global duplicates across the dataset.
-
- | Hash Set
-
- |
-| **Structural** | `t-partition`<br> | `tp.`<br> | Batches items into blocks of fixed size $N$.
-
- | Array Buffer
-
- |
+| **Transformers** | `t-map`<br> | `tm.`<br> | Applies a 1-to-1 function transformation. | None |
+| **Filters** | `t-filter`<br> | `tf.`<br> | Retains items matching a predicate function.| None |
+| **Stateful** | `t-take`<br> | `tt.`<br> | Retains first `N` items and signals early loop exit. | Counter |
+| **Stateful** | `t-drop`<br> | `td.`<br> | Skips the first `N` items before passing through. | Counter |
+| **Stateful** | `t-dedupe`<br> | `tdd.`<br> | Removes consecutive duplicate values. | Last Value |
+| **Stateful** | `t-distinct`<br> | `tdt.`<br> | Removes global duplicates across the dataset. | Hash Set |
+| **Structural** | `t-partition`<br> | `tp.`<br> | Batches items into blocks of fixed size `N`. | Array Buffer |
 
 ### 2. Infrastructure & Runners
 
