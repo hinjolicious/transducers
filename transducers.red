@@ -124,7 +124,12 @@ t-partition: func[n [integer!]][
 			][acc] ]]]
 tp.: :t-partition
 
-
+; t-tap: Inspection / logging mechanism we can use to check what's going on between each steps in the pipeline
+t-tap: func[f [any-function!]][
+	closure[step][f][
+		closure[acc input][step][
+			f :input
+			step acc input ]]]
 
 ; ==============================================================================
 ; SECTION 5: CO-ROUTINE CHANNEL ADAPTER
@@ -145,11 +150,5 @@ make-transducer-channel: func[/pipeline xf [any-function!]][
 		receive: func[][
 			either empty? queue [none][take queue] ]]]
 mtc.: :make-transducer-channel
-
-t-tap: func[f [any-function!]][
-	closure[step][f][
-		closure[acc input][step][
-			f :input
-			step acc input ]]]
 
 
