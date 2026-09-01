@@ -17,8 +17,6 @@ Red [
 ; Base reducer for collections/blocks
 push-reducer: func[acc [block!] input][append/only acc input]
 pr.: :push-reducer
-; Base reducer for nested/batched items
-; push-nested-reducer: func[acc [block!] input][append/only acc input]
 
 ; --- Early Termination (Reduced) Sentinels ---
 
