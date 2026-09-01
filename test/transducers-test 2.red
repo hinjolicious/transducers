@@ -14,7 +14,7 @@ print "^/== TEST ==^/"
 ; 1. In-Memory Series Transduction
 
 ; Pipeline: Deduplicate globally -> Keep Evens -> Double them -> Batch into pairs (2)
-; t-tap is a logging tap to examined the internal state inside transducer pipelines
+; t-tap is a logging tap to examine the internal state inside transducer pipelines
 xf: comp-funcs reduce [
 	t-distinct				t-tap func[x][print["dis      :" x]]
 	t-filter :even?			t-tap func[x][print["  fil    :" x]]
